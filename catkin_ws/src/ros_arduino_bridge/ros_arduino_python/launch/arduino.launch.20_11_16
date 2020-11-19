@@ -1,0 +1,39 @@
+<launch>
+   <node name="mobilebase_arduino" pkg="ros_arduino_python" type="arduino_node.py" output="screen">
+      <rosparam file="$(find ros_arduino_python)/config/my_arduino_params.yaml" command="load" />
+   </node>
+   
+<!-- 加载机器人模型参数 -->
+   <param name="robot_description" textfile="$(find mbot_description)/urdf/urdf/mbot_with_laser.urdf" />
+<!--include file="$(find robot_sim_demo)/launch/include/xbot-u.launch.xml"/-->
+
+ 
+   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+ 
+   <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+   <param name="publish_frequency" type="double" value="5.0" />
+   </node>
+
+   <!-- 里程计估算 -->
+    <node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">
+        <param name="freq" value="10.0"/>
+        <param name="sensor_timeout" value="1.0"/>
+        <param name="publish_tf" value="true"/>
+        <param name="odom_used" value="true"/>
+        <param name="imu_used" value="true"/>
+        <param name="vo_used" value="false"/>
+        <param name="output_frame" value="odom"/>
+	<param name="base_footprint_frame" value="base_link"/>
+	<remap from="/imu_data" to="/imu/data" />
+    </node>
+
+
+   <!-- 运行激光雷达驱动 -->
+   <include file="$(find mbot_bringup)/launch/rplidar.launch" />
+
+   <!--node pkg="tf" type="static_transform_publisher" name="link2_broadcaster"    args="0.0 0 0 0 0 1 odom base_link  1000" /-->
+   <node pkg="tf" type="static_transform_publisher" name="link3_broadcaster"    args="0.0 0 0 0 0 0 base_link laser 1000" />
+   <node pkg="tf" type="static_transform_publisher" name="link4_broadcaster"    args="0.0 0 0 0 0 0 base_link base_imu 1000" />
+
+</launch>
+

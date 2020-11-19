@@ -1,0 +1,83 @@
+# For a direct USB cable connection, the port name is typically
+# /dev/ttyACM# where is # is a number such as 0, 1, 2, etc
+# For a wireless connection like XBee, the port is typically
+# /dev/ttyUSB# where # is a number such as 0, 1, 2, etc.
+
+#转速133rpm
+#减速比1：74.8
+#编码器精度13cpr
+#L=12cm
+#
+#小车理论速度m/s
+#v=0.40390
+#vx=0.46636
+#vy=0.53853
+#thet=3.36583
+#小车实际速度
+#vx=0.455
+#vy=0.517
+#thet=3.320
+port: /dev/ttyUSB0
+baud: 115200 
+timeout: 0.1
+
+rate: 50
+sensorstate_rate: 10
+
+use_base_controller: True
+base_controller_rate: 10
+base_controller_timeout: 0.5
+
+
+# For a robot that uses base_footprint, change base_frame to base_footprint
+base_frame: base_link
+
+# === Robot drivetrain parameters
+wheel_diameter: 0.058
+wheel_track: 0.120    # L value
+encoder_resolution: 13 #DFRobot 12V DC 146rpm encoder motors
+gear_reduction: 74.8
+motors_reversed: True
+debugPID: True 
+linear_scale_correction: 1.0241
+angular_scale_correction: 0.8824 
+
+# === PID parameters
+accel_limit: 0.05
+
+AWheel_Kp: 8 
+AWheel_Kd: 30 
+AWheel_Ki: 0
+AWheel_Ko: 50
+
+BWheel_Kp: 8
+BWheel_Kd: 30
+BWheel_Ki: 0
+BWheel_Ko: 50
+
+CWheel_Kp: 10
+CWheel_Kd: 30
+CWheel_Ki: 0
+CWheel_Ko: 50
+
+# === Sensor definitions.  Examples only - edit for your robot.
+#     Sensor type can be one of the follow (case sensitive!):
+#	  * Ping
+#	  * GP2D12
+#	  * Analog
+#	  * Digital
+#	  * PololuMotorCurrent
+#	  * PhidgetsVoltage
+#	  * PhidgetsCurrent (20 Amp, DC)
+
+
+
+sensors: {
+  antiDropIR_front: {pin: 22, type: Digital, rate: 5, direction: input},
+  antiHitIR_front:  {pin: 1, type: GP2Y0A41, rate: 2, direction: input},
+  antiHitIR_right:  {pin: 2, type: GP2Y0A41, rate: 2, direction: input},
+  antiHitIR_left:   {pin: 3, type: GP2Y0A41, rate: 2, direction: input},
+  motors_current:   {pin: 0, type: MotorTotalCurrent, rate: 2},
+  voltage_sensor:   {pin: 4, type: Voltage, rate: 0.2, direction: input}
+}
+
