@@ -1,8 +1,0 @@
-prefix=/home/pi/catkin_ws/install
-
-Name: serial_imu_hat_6dof
-Description: Description of serial_imu_hat_6dof
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 

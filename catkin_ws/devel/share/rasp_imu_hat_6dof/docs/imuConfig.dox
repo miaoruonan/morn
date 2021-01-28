@@ -1,6 +1,0 @@
-\subsubsection parameters ROS parameters
-
-Reads and maintains the following parameters on the ROS server
-
-- \b "~yaw_calibration" : \b [double] Yaw Calibration min: -180.0, default: 0.0, max: 180.0
-
